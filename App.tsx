@@ -1,115 +1,113 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
 import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  configureFonts,
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
+import {Provider, useSelector} from 'react-redux';
+import {RootState, store} from './redux/store';
 
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AppRouter from './screens/AppRouter';
+import {Colors} from './config/Theme';
 
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+const MainStack = createNativeStackNavigator();
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+const MainApp = () => {
+  const {darkmode} = useSelector((state: RootState) => state.ui);
+  const CombinedDefaultTheme = {
+    ...PaperDefaultTheme,
+    ...NavigationDefaultTheme,
+    colors: {
+      ...PaperDefaultTheme.colors,
+      ...NavigationDefaultTheme.colors,
+      primary: Colors.PRIMARY,
+      accent: Colors.ACCENT,
+      background: '#fff',
+    },
+    fonts:configureFonts({android:{
+      regular:{
+        fontFamily: 'Roboto-Regular',
+        fontWeight: 'normal',
+      },
+      medium: {
+        fontFamily: 'Roboto-Medium',
+        fontWeight: 'normal',
+      },
+      light:{
+        
+        fontFamily: 'Roboto-Light',
+        fontWeight: 'normal',
+      },
+      thin:{
+        fontFamily: 'Roboto-Thin',
+        fontWeight: 'normal',
+      }
+      }
+    })
+  };
+  const CombinedDarkTheme = {
+    ...PaperDarkTheme,
+    ...NavigationDarkTheme,
+    colors: {
+      ...PaperDarkTheme.colors,
+      ...NavigationDarkTheme.colors,
+      primary: Colors.PRIMARY,
+      accent: Colors.ACCENT,
+      background: Colors.DARK_PRIMARY,
+      surface:"rgba(255,255,255,0.48)",
+      placeholder:"rgba(255,255,255,0.5)",
+     
+    },
+    fonts:configureFonts({android:{
+      regular:{
+        fontFamily: 'OpenSans-Regular',
+        fontWeight: 'normal',
+      },
+      medium: {
+        fontFamily: 'OpenSans-Medium',
+        fontWeight: 'normal',
+      },
+      light:{
+        
+        fontFamily: 'OpenSans-Light',
+        fontWeight: 'normal',
+      },
+      thin:{
+        fontFamily: 'OpenSans-Light',
+        fontWeight: 'normal',
+      }
+      }
+    })
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <PaperProvider theme={darkmode ? CombinedDarkTheme : CombinedDefaultTheme}>
+      <NavigationContainer
+        theme={darkmode ? CombinedDarkTheme : CombinedDefaultTheme}>
+        <MainStack.Navigator initialRouteName="main">
+          <MainStack.Screen
+            name="main"
+            options={{headerShown: false}}
+            component={AppRouter}
+          />
+        </MainStack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
+const App = () => {
+  return (
+    <Provider store={store}>
+      <MainApp />
+    </Provider>
+  );
+};
 export default App;
