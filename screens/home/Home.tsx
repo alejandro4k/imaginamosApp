@@ -24,19 +24,15 @@ const Home = () => {
           paddingHorizontal: dimensionsTheme.ITEM_WITH / 8,
           paddingTop: dimensionsTheme.ITEM_HEIGHT * 0.3,
         }}>
-        <Title style={{fontSize: 30}}>
-          Hello, what do you want to watch ?
-        </Title>
+        <Title style={{fontSize: 30}}>Hello, what do you want to watch ?</Title>
         <Searchbar
           placeholder="Search"
           onChangeText={onChangeSearch}
-         
-
           style={{
-              borderRadius:RADIUS*3,
-              backgroundColor:ColorsThemePaper.surface,
-              height:40,
-              marginTop:Spacing*4
+            borderRadius: RADIUS * 3,
+            backgroundColor: ColorsThemePaper.surface,
+            height: 40,
+            marginTop: Spacing * 4,
           }}
           value={searchQuery}
         />
