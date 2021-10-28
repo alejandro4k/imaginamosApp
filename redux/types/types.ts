@@ -29,7 +29,8 @@ export interface IMovie{
   vote_count:number
 }
 export interface IMoviesState{
-  movies:IMovie[],
+  moviesRecomended:IMovie[],
+  moviesRated:IMovie[],
   activeMovie:IMovie|null
 }
 export interface IMoviesAction extends IReduxType{
@@ -43,7 +44,8 @@ export interface IUiActions extends IReduxType{
 }
 
 export enum Types {
-  loadMovies = '[movies] load movies',
+  loadMoviesRecomended = '[movies] load movies recomended',
+  loadMoviesRated = '[movies] load movies rated',
   setActiveMovie = '[movies] set active movie',
   setDarkMode = '[ui] set dark mode'
 }

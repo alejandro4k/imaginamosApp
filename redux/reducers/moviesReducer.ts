@@ -1,7 +1,8 @@
 import {IMovie, IMoviesAction, IMoviesState, Types} from '../types/types';
 
 const initialState: IMoviesState = {
-  movies: [],
+    moviesRecomended:[],
+ moviesRated:[],
   activeMovie: null,
 };
 export const moviesReducer = (
@@ -10,10 +11,15 @@ export const moviesReducer = (
 ): IMoviesState => {
   const {type, payload} = action;
   switch (type) {
-    case Types.loadMovies:
+    case Types.loadMoviesRecomended:
       return {
         ...state,
-        movies: [...(payload as IMovie[])],
+        moviesRecomended: [...(payload as IMovie[])],
+      };
+      case Types.loadMoviesRated:
+      return {
+        ...state,
+        moviesRated: [...(payload as IMovie[])],
       };
     case Types.setActiveMovie:
       return {

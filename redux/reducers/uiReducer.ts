@@ -1,7 +1,7 @@
 import { IUiActions, IUiState, Types } from "../types/types"
 
 const initialState:IUiState = {
-    darkmode:false
+    darkmode:true
 }
 export const uiReducer = (state=initialState,action:IUiActions):IUiState=>{
     const {type,payload} = action;

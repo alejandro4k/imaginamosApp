@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Colors, theme, dimensionsTheme} from '../../config/Theme';
 import {setDarkMode} from '../../redux/actions/uiActions';
 import {RootState} from '../../redux/store';
+import Recomended from '../recomended/Recomended';
 const {RADIUS, Spacing} = dimensionsTheme;
 
 const Home = () => {
@@ -46,12 +47,12 @@ const Home = () => {
           backgroundColor: ColorsThemePaper.background,
         }}>
         <View style={theme.container}>
-          <Text> PANTALLA HOME</Text>
-          <Button mode="contained" onPress={() => dispatch(setDarkMode())}>
+          <Recomended/>
+          {/* <Button mode="contained" onPress={() => dispatch(setDarkMode())}>
             DARK MODE
           </Button>
 
-          <Title>{`DARK MODE ${darkmode ? 'ON' : 'OFF'}`}</Title>
+          <Title>{`DARK MODE ${darkmode ? 'ON' : 'OFF'}`}</Title> */}
         </View>
       </View>
     </View>

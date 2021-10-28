@@ -4,11 +4,11 @@ export const {width, height} = Dimensions.get('window');
 export const Size = 64;
 export const Icon_Size = Size * 0.6;
 export const Spacing = 10;
-const s = width * 0.68;
+const s = width * 0.35;
 
 export const dimensionsTheme = {
   ITEM_WITH: s,
-  ITEM_HEIGHT: s * 0.68,
+  ITEM_HEIGHT: s * 1.35,
   RADIUS: 18 * 0.5,
   Spacing,
   FULL_SIZE: s + Spacing * 2,
@@ -16,7 +16,7 @@ export const dimensionsTheme = {
 
 export const Colors = {
   PRIMARY: '#039be5',
-  DARK_PRIMARY: '#4b6584',
+  DARK_PRIMARY: '#37474f',
   LIGTH_PRIMARY: '#45aaf2',
   TEXT_ICONS: '#FBFFF1',
   ACCENT: '#0fb9b1',
@@ -24,6 +24,7 @@ export const Colors = {
   SECONDARY_TEXT: '#a5b1c2',
   DIVIDER_COLOR: '#BDBDBD',
   GREY_LIGHT: '#fafafa',
+  DANGER: "#d32f2f"
 };
 
 export const THEME_PAPER = {
@@ -34,6 +35,10 @@ export const theme = StyleSheet.create({
     flex: 1,
     padding: Spacing * 1.2,
   
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 
   /* textInput:{
