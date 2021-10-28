@@ -15,16 +15,18 @@ export const dimensionsTheme = {
 };
 
 export const Colors = {
-  PRIMARY: '#039be5',
-  DARK_PRIMARY: '#37474f',
-  LIGTH_PRIMARY: '#45aaf2',
-  TEXT_ICONS: '#FBFFF1',
+  PRIMARY: '#5da4d4',
+  DARK_PRIMARY: '#2c3545',
+  LIGTH_PRIMARY: '#8fbce0',
+  TEXT_ICONS: '#dbe9f3',
   ACCENT: '#0fb9b1',
   PRIMARY_TEXT: '#212121',
-  SECONDARY_TEXT: '#a5b1c2',
-  DIVIDER_COLOR: '#BDBDBD',
+  SECONDARY_TEXT: '#747c87',
+  DIVIDER_COLOR: '#7b8590',
   GREY_LIGHT: '#fafafa',
-  DANGER: "#d32f2f"
+  BLUE_DARK:"#40648c",
+  DANGER: "#d32f2f",
+  PLACEHOLDER:"#6b7480"
 };
 
 export const THEME_PAPER = {
@@ -33,7 +35,7 @@ export const THEME_PAPER = {
 export const theme = StyleSheet.create({
   container: {
     flex: 1,
-    padding: Spacing * 1.2,
+    padding: Spacing * 3,
   
   },
   row: {

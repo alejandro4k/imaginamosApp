@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from './home/Home';
 import Splash from './splash/Splash';
+import { HomeRouter } from './home/HomeRouter';
 const Stack = createNativeStackNavigator();
 const AppRouter = () => {
   return (
@@ -12,9 +12,9 @@ const AppRouter = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Home"
+        name="App"
         options={{headerShown: false}}
-        component={Home}
+        component={HomeRouter}
       />
     </Stack.Navigator>
   );

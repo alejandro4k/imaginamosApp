@@ -34,7 +34,7 @@ export interface IMoviesState{
   activeMovie:IMovie|null
 }
 export interface IMoviesAction extends IReduxType{
-  payload?:IMovie | string | IMovie[]
+  payload?:IMovie | string | IMovie[] | null
 }
 export interface IUiState{
   darkmode:boolean

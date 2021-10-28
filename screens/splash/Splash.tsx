@@ -17,7 +17,7 @@ const Splash = (props: any) => {
                 
                 await dispatch( startLoadMoviesRecomended() )
                 await dispatch( startLoadMoviesRated() );
-                navigation.replace('Home');
+                navigation.replace('App');
 
             } catch (error) {
                 console.log(error)
@@ -37,9 +37,9 @@ const Splash = (props: any) => {
       ]}>
       <ActivityIndicator size="large" color={Colors.PRIMARY} />
       {!showError?
-      <Caption style={{fontSize: 18, marginTop: Spacing}}>Cargando...</Caption>
+      <Caption style={{fontSize: 18, marginTop: Spacing}}>Loading...</Caption>
       :
-      <Caption style={{fontSize: 18, marginTop: Spacing, color:Colors.DANGER}}>Por favor intente nuevamente</Caption>
+      <Caption style={{fontSize: 18, marginTop: Spacing, color:Colors.DANGER}}>Plase try again.</Caption>
 
       }
     </View>

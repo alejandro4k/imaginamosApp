@@ -62,8 +62,10 @@ const MainApp = () => {
       primary: Colors.PRIMARY,
       accent: Colors.ACCENT,
       background: Colors.DARK_PRIMARY,
-      surface:"rgba(255,255,255,0.48)",
-      placeholder:"rgba(255,255,255,0.5)",
+      surface:"rgba(142,190,225,255)",
+      placeholder:"#c1dcee",
+      /* surface:"rgba(255,255,255,0.48)",
+      placeholder:"rgba(255,255,255,0.5)", */
      
     },
     fonts:configureFonts({android:{
