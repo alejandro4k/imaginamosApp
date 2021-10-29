@@ -22,19 +22,20 @@ import {
   useTheme,
 } from 'react-native-paper';
 import {AirbnbRating} from 'react-native-ratings';
-import {getMovieDetail} from '../../helpers/movies';
-import {IDetailMovie} from '../../interface/movie';
-import ProductionCompanyItem from '../../components/movies/ProductionCompanyItem';
+import {getMovieCast, getMovieDetail} from '../../helpers/movies';
+import {IDetailMovie, IMovieCast} from '../../interface/movie';
+import ListMovieCastItem from '../../components/movies/ListMovieCastItem';
 import {SharedElement} from 'react-navigation-shared-element';
+import { joinArrString } from '../../utils/utils';
 const {ITEM_HEIGHT, ITEM_WITH, RADIUS} = dimensionsTheme;
 
 const DetailMovie = () => {
   const {activeMovie} = useSelector((state: RootState) => state.movies);
   const [movieDetail, setMovieDetail] = useState<IDetailMovie | null>(null);
+  const [movieCast, setMovieCast] = useState<IMovieCast[] | null>(null);
   const [isReady, setIsReady] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {colors: ColorsThemePaper} = useTheme();
 
   const handleGoBack = () => {
     dispatch(setActiveMovie(null));
@@ -44,7 +45,9 @@ const DetailMovie = () => {
     if (activeMovie) {
       const fetchDetail = async (idMovie: number) => {
         const resp = await getMovieDetail(idMovie);
+        const {cast} = await getMovieCast(idMovie);
         setMovieDetail(resp);
+        setMovieCast(cast);
       };
       fetchDetail(activeMovie.id);
     }
@@ -52,19 +55,6 @@ const DetailMovie = () => {
       setIsReady(true);
     });
   }, []);
-  /* if (!isReady) {
-    return (
-      <View
-        style={[
-          theme.container,
-          {justifyContent: 'center', alignItems: 'center'},
-        ]}>
-        <ActivityIndicator size="large" color={Colors.PRIMARY} />
-
-        <Caption style={{fontSize: 18, marginTop: Spacing}}>Loading...</Caption>
-      </View>
-    );
-  } */
   return (
     <View style={{flex: 1}}>
       {activeMovie && (
@@ -100,8 +90,7 @@ const DetailMovie = () => {
           <ScrollView>
             <View style={theme.container}>
               <SharedElement id={`${activeMovie.id}.title`}>
-
-              <Title style={{fontWeight: 'bold'}}>{activeMovie.title}</Title>
+                <Title style={{fontWeight: 'bold'}}>{activeMovie.title}</Title>
               </SharedElement>
               <View
                 style={[
@@ -109,29 +98,23 @@ const DetailMovie = () => {
                   {marginTop: Spacing, marginBottom: Spacing * 3},
                 ]}>
                 <TouchableOpacity
-                  style={{
-                    padding: Spacing,
-                    width: ITEM_WITH,
-                    borderRadius: RADIUS * 3,
-                    backgroundColor: Colors.PLACEHOLDER,
-                  }}>
+                  style={theme.btnWatch}>
                   <Paragraph style={{fontWeight: 'bold', alignSelf: 'center'}}>
                     WATCH NOW
                   </Paragraph>
                 </TouchableOpacity>
                 <SharedElement id={`${activeMovie.id}.rating`}>
-
-                <AirbnbRating
-                  count={5}
-                  showRating={false}
-                  reviews={['Bad', 'Regular', 'OK', 'Good', 'Very Good']}
-                  defaultRating={Math.round(activeMovie.vote_average)}
-                  size={20}
-                  isDisabled
-                />
+                  <AirbnbRating
+                    count={5}
+                    showRating={false}
+                    reviews={['Bad', 'Regular', 'OK', 'Good', 'Very Good']}
+                    defaultRating={Math.round(activeMovie.vote_average)}
+                    size={20}
+                    isDisabled
+                  />
                 </SharedElement>
               </View>
-              {movieDetail && isReady ? (
+              {movieDetail && movieCast && isReady ? (
                 <>
                   <Paragraph
                     style={{
@@ -141,36 +124,33 @@ const DetailMovie = () => {
                     }}>
                     {movieDetail.overview}
                   </Paragraph>
-                  <Subheading>PRODUCTION COMPANIES:</Subheading>
                   <FlatList
-                    data={movieDetail.production_companies}
+                    data={movieCast}
                     horizontal
+                    style={{marginTop: Spacing}}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={() => (
                       <View style={{width: Spacing * 2}} />
                     )}
                     renderItem={({item}) => (
-                      <ProductionCompanyItem
-                        key={item.id}
-                        productionCompany={item}
-                      />
+                      <ListMovieCastItem key={item.id} cast={item} />
                     )}
                   />
                   <View style={{marginTop: Spacing, marginBottom: Spacing}}>
                     <View style={{flexDirection: 'row'}}>
                       <Paragraph style={{fontWeight: 'bold', marginRight: 20}}>
+                        Studio:
+                      </Paragraph>
+                      <Paragraph>{joinArrString(movieDetail.production_companies,",",true)}</Paragraph>
+                    </View>
+                  </View>
+                  <View style={{marginTop: Spacing, marginBottom: Spacing}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Paragraph style={{fontWeight: 'bold', marginRight: 20}}>
                         Genre:
                       </Paragraph>
-                      <View style={{flexDirection: 'row'}}>
-                        {movieDetail.genres.map((gen, index) => (
-                          <Paragraph
-                            key={gen.id}
-                            style={{color: Colors.SECONDARY_TEXT}}>
-                            {gen.name}
-                            {index < movieDetail.genres.length - 1 && ','}
-                          </Paragraph>
-                        ))}
-                      </View>
+                      <Paragraph>{joinArrString(movieDetail.genres,",",true)}</Paragraph>
+                      
                     </View>
                   </View>
                   <View style={{marginTop: Spacing, marginBottom: Spacing}}>

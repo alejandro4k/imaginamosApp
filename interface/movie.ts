@@ -14,6 +14,24 @@ export interface ISpokenLenguages {
     iso_639_1:string,
     name:string
 }
+export interface IMovieCast {
+    adult:boolean,
+    gender:number,
+    id:number,
+    known_for_department:string,
+    name:string,
+    original_name:string,
+    popularity:number,
+    profile_path:string,
+    cast_id:number,
+    character:string,
+    credit_id:string,
+    order:number
+}
+export interface IMovieCastResponseApi{
+    id:number,
+    cast:IMovieCast[]
+}
 export interface IDetailMovie extends IMovie{
     belongs_to_collection:Partial<IMovie>,
     budget:number,

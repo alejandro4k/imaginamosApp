@@ -24,9 +24,9 @@ export const Colors = {
   SECONDARY_TEXT: '#747c87',
   DIVIDER_COLOR: '#7b8590',
   GREY_LIGHT: '#fafafa',
-  BLUE_DARK:"#40648c",
-  DANGER: "#d32f2f",
-  PLACEHOLDER:"#6b7480"
+  BLUE_DARK: '#40648c',
+  DANGER: '#d32f2f',
+  PLACEHOLDER: '#6b7480',
 };
 
 export const THEME_PAPER = {
@@ -35,65 +35,47 @@ export const THEME_PAPER = {
 export const theme = StyleSheet.create({
   container: {
     flex: 1,
-    padding: Spacing * 3,
-  
+    paddingTop:Spacing*2,
+    paddingHorizontal:Spacing*3,
+    paddingBottom:Spacing
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
-  /* textInput:{
-    marginBottom: Spacing * 0.68,
-    height: dimensionsTheme.ITEM_HEIGHT / 3.85,
-  },
-  fontMd:{
-    color: Colors.GREY_LIGHT, fontSize: hp(2.5), flex: 2
-  },
-  btn: {
-    //height: Spacing * 5,
-    height: dimensionsTheme.ITEM_HEIGHT/3.8,
-    backgroundColor: Colors.ACCENT,
-  },
-  btn_primary:{
-    height: dimensionsTheme.ITEM_HEIGHT/3.8,
+  header: {
+    flex: 1.45,
     backgroundColor: Colors.PRIMARY,
-  }
-  ,
-  btn_disabled: {
-    borderRadius: dimensionsTheme.RADIUS * 0.5,
-    height: Spacing * 5,
-
-    backgroundColor: Colors.DIVIDER_COLOR,
+    paddingHorizontal: Spacing * 6.3,
+    paddingTop: Spacing * 5,
   },
-  btn_new_survey: {
-    borderRadius: dimensionsTheme.RADIUS*2,
-    height: Spacing * 10,
-    
-    
-    backgroundColor: Colors.PRIMARY,
+  searchBar: {
+    borderRadius: dimensionsTheme.RADIUS * 3,
+    height: 40,
+    marginTop: Spacing * 2,
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  containerList: {
+    flex: 4,
+    borderRadius: dimensionsTheme.RADIUS * 3,
+    width: '100%',
+    marginTop: -30,
   },
-  listItemContainer: {
-    backgroundColor: Colors.GREY_LIGHT,
-    borderRadius: dimensionsTheme.RADIUS,
-    padding: Spacing * 0.7,
-    borderColor: Colors.DIVIDER_COLOR,
-    borderWidth: 1,
-    elevation: 1,
+  itemCardContainer: {
+    width: dimensionsTheme.ITEM_WITH,
+    height: dimensionsTheme.ITEM_HEIGHT * 1.34,
+    overflow: 'hidden',
   },
-  viewBottomModal: {
-    justifyContent: 'flex-end',
-    margin: 0,
+  itemCardImg: {
+    resizeMode: 'cover',
+    height: dimensionsTheme.ITEM_HEIGHT,
+    width: dimensionsTheme.ITEM_WITH,
+    borderRadius: dimensionsTheme.RADIUS * 2,
   },
-  contentModal: {
-    backgroundColor: 'white',
-    padding: 22,
-
-    borderRadius: 4,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-  }, */
+  btnWatch: {
+    padding: Spacing,
+    width: dimensionsTheme.ITEM_WITH,
+    borderRadius: dimensionsTheme.RADIUS * 3,
+    backgroundColor: Colors.PLACEHOLDER,
+  },
 });
