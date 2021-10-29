@@ -1,14 +1,14 @@
 import { IUiActions, IUiState, Types } from "../types/types"
 
 const initialState:IUiState = {
-    darkmode:true
+    darkmode:false
 }
 export const uiReducer = (state=initialState,action:IUiActions):IUiState=>{
     const {type,payload} = action;
     switch (type) {
         case Types.setDarkMode:
             return{
-                darkmode:!state.darkmode
+                darkmode:payload as boolean
             }
     
         default: return state

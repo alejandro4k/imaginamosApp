@@ -14,11 +14,12 @@ import {
 import {Provider, useSelector} from 'react-redux';
 import {RootState, store} from './redux/store';
 
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AppRouter from './screens/AppRouter';
 import {Colors} from './config/Theme';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const MainStack = createNativeStackNavigator();
+
+const MainStack = createStackNavigator()
 
 const MainApp = () => {
   const {darkmode} = useSelector((state: RootState) => state.ui);
@@ -32,26 +33,26 @@ const MainApp = () => {
       accent: Colors.ACCENT,
       background: '#fff',
     },
-    fonts:configureFonts({android:{
-      regular:{
-        fontFamily: 'Roboto-Regular',
-        fontWeight: 'normal',
+    fonts: configureFonts({
+      android: {
+        regular: {
+          fontFamily: 'Roboto-Regular',
+          fontWeight: 'normal',
+        },
+        medium: {
+          fontFamily: 'Roboto-Medium',
+          fontWeight: 'normal',
+        },
+        light: {
+          fontFamily: 'Roboto-Light',
+          fontWeight: 'normal',
+        },
+        thin: {
+          fontFamily: 'Roboto-Thin',
+          fontWeight: 'normal',
+        },
       },
-      medium: {
-        fontFamily: 'Roboto-Medium',
-        fontWeight: 'normal',
-      },
-      light:{
-        
-        fontFamily: 'Roboto-Light',
-        fontWeight: 'normal',
-      },
-      thin:{
-        fontFamily: 'Roboto-Thin',
-        fontWeight: 'normal',
-      }
-      }
-    })
+    }),
   };
   const CombinedDarkTheme = {
     ...PaperDarkTheme,
@@ -62,32 +63,29 @@ const MainApp = () => {
       primary: Colors.PRIMARY,
       accent: Colors.ACCENT,
       background: Colors.DARK_PRIMARY,
-      surface:"rgba(142,190,225,255)",
-      placeholder:"#c1dcee",
-      /* surface:"rgba(255,255,255,0.48)",
-      placeholder:"rgba(255,255,255,0.5)", */
-     
+      surface: 'rgba(142,190,225,255)',
+      placeholder: '#c1dcee',
     },
-    fonts:configureFonts({android:{
-      regular:{
-        fontFamily: 'OpenSans-Regular',
-        fontWeight: 'normal',
+    fonts: configureFonts({
+      android: {
+        regular: {
+          fontFamily: 'OpenSans-Regular',
+          fontWeight: 'normal',
+        },
+        medium: {
+          fontFamily: 'OpenSans-Medium',
+          fontWeight: 'normal',
+        },
+        light: {
+          fontFamily: 'OpenSans-Light',
+          fontWeight: 'normal',
+        },
+        thin: {
+          fontFamily: 'OpenSans-Light',
+          fontWeight: 'normal',
+        },
       },
-      medium: {
-        fontFamily: 'OpenSans-Medium',
-        fontWeight: 'normal',
-      },
-      light:{
-        
-        fontFamily: 'OpenSans-Light',
-        fontWeight: 'normal',
-      },
-      thin:{
-        fontFamily: 'OpenSans-Light',
-        fontWeight: 'normal',
-      }
-      }
-    })
+    }),
   };
 
   return (
@@ -99,6 +97,7 @@ const MainApp = () => {
             name="main"
             options={{headerShown: false}}
             component={AppRouter}
+            
           />
         </MainStack.Navigator>
       </NavigationContainer>

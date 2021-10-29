@@ -25,12 +25,13 @@ import {AirbnbRating} from 'react-native-ratings';
 import {getMovieDetail} from '../../helpers/movies';
 import {IDetailMovie} from '../../interface/movie';
 import ProductionCompanyItem from '../../components/movies/ProductionCompanyItem';
+import {SharedElement} from 'react-navigation-shared-element';
 const {ITEM_HEIGHT, ITEM_WITH, RADIUS} = dimensionsTheme;
 
 const DetailMovie = () => {
   const {activeMovie} = useSelector((state: RootState) => state.movies);
   const [movieDetail, setMovieDetail] = useState<IDetailMovie | null>(null);
-  const [isReady, setIsReady] = useState(false)
+  const [isReady, setIsReady] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const {colors: ColorsThemePaper} = useTheme();
@@ -48,25 +49,25 @@ const DetailMovie = () => {
       fetchDetail(activeMovie.id);
     }
     InteractionManager.runAfterInteractions(() => {
-        setIsReady(true);
-      });
+      setIsReady(true);
+    });
   }, []);
-  if (!isReady) {
+  /* if (!isReady) {
     return (
-        <View
+      <View
         style={[
           theme.container,
           {justifyContent: 'center', alignItems: 'center'},
         ]}>
         <ActivityIndicator size="large" color={Colors.PRIMARY} />
 
-        <Caption style={{fontSize: 18,marginTop: Spacing}}>Loading...</Caption>
+        <Caption style={{fontSize: 18, marginTop: Spacing}}>Loading...</Caption>
       </View>
     );
-  }
+  } */
   return (
     <View style={{flex: 1}}>
-      {movieDetail && (
+      {activeMovie && (
         <>
           <View>
             <TouchableOpacity
@@ -83,20 +84,25 @@ const DetailMovie = () => {
                 size={ITEM_HEIGHT / 8}
               />
             </TouchableOpacity>
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/original${movieDetail.poster_path}`,
-              }}
-              style={{
-                height: ITEM_HEIGHT * 1.9,
-                width: '100%',
-                resizeMode: 'stretch',
-              }}
-            />
+            <SharedElement id={`${activeMovie.id}.poster`}>
+              <Image
+                source={{
+                  uri: `https://image.tmdb.org/t/p/original${activeMovie.poster_path}`,
+                }}
+                style={{
+                  height: ITEM_HEIGHT * 1.9,
+                  width: '100%',
+                  resizeMode: 'stretch',
+                }}
+              />
+            </SharedElement>
           </View>
           <ScrollView>
             <View style={theme.container}>
-              <Title style={{fontWeight: 'bold'}}>{movieDetail.title}</Title>
+              <SharedElement id={`${activeMovie.id}.title`}>
+
+              <Title style={{fontWeight: 'bold'}}>{activeMovie.title}</Title>
+              </SharedElement>
               <View
                 style={[
                   theme.row,
@@ -113,68 +119,88 @@ const DetailMovie = () => {
                     WATCH NOW
                   </Paragraph>
                 </TouchableOpacity>
+                <SharedElement id={`${activeMovie.id}.rating`}>
+
                 <AirbnbRating
                   count={5}
                   showRating={false}
                   reviews={['Bad', 'Regular', 'OK', 'Good', 'Very Good']}
-                  defaultRating={Math.round(movieDetail.vote_average)}
+                  defaultRating={Math.round(activeMovie.vote_average)}
                   size={20}
                   isDisabled
                 />
+                </SharedElement>
               </View>
-
-              <Paragraph
-                style={{
-                  color: Colors.SECONDARY_TEXT,
-                  textAlign: 'justify',
-                  lineHeight: 25,
-                }}>
-                {movieDetail.overview}
-              </Paragraph>
-              <Subheading>PRODUCTION COMPANIES:</Subheading>
-
-              <FlatList
-                data={movieDetail.production_companies}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => (
-                  <View style={{width: Spacing * 2}} />
-                )}
-                renderItem={({item}) => (
-                  <ProductionCompanyItem
-                    key={item.id}
-                    productionCompany={item}
+              {movieDetail && isReady ? (
+                <>
+                  <Paragraph
+                    style={{
+                      color: Colors.SECONDARY_TEXT,
+                      textAlign: 'justify',
+                      lineHeight: 25,
+                    }}>
+                    {movieDetail.overview}
+                  </Paragraph>
+                  <Subheading>PRODUCTION COMPANIES:</Subheading>
+                  <FlatList
+                    data={movieDetail.production_companies}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    ItemSeparatorComponent={() => (
+                      <View style={{width: Spacing * 2}} />
+                    )}
+                    renderItem={({item}) => (
+                      <ProductionCompanyItem
+                        key={item.id}
+                        productionCompany={item}
+                      />
+                    )}
                   />
-                )}
-              />
-              
-              <View style={{marginTop: Spacing,marginBottom:Spacing}}>
-                <View style={{flexDirection: 'row'}}>
-                  <Paragraph style={{fontWeight: 'bold',marginRight:20}}>Genre:</Paragraph>
-                  <View style={{flexDirection: 'row'}}>
-                    {movieDetail.genres.map((gen,index) => (
-                      <Paragraph key={gen.id} style={{color: Colors.SECONDARY_TEXT}}>
-                        {gen.name}
-                        {index < movieDetail.genres.length-1 &&
-                        ","
-                        }
+                  <View style={{marginTop: Spacing, marginBottom: Spacing}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Paragraph style={{fontWeight: 'bold', marginRight: 20}}>
+                        Genre:
                       </Paragraph>
-                    ))}
+                      <View style={{flexDirection: 'row'}}>
+                        {movieDetail.genres.map((gen, index) => (
+                          <Paragraph
+                            key={gen.id}
+                            style={{color: Colors.SECONDARY_TEXT}}>
+                            {gen.name}
+                            {index < movieDetail.genres.length - 1 && ','}
+                          </Paragraph>
+                        ))}
+                      </View>
+                    </View>
                   </View>
-                </View>
-              </View>
-              <View style={{marginTop: Spacing,marginBottom:Spacing}}>
-                <View style={{flexDirection: 'row'}}>
-                  <Paragraph style={{fontWeight: 'bold',marginRight:20}}>Release:</Paragraph>
-                  <Paragraph style={{color: Colors.SECONDARY_TEXT}}>
+                  <View style={{marginTop: Spacing, marginBottom: Spacing}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Paragraph style={{fontWeight: 'bold', marginRight: 20}}>
+                        Release:
+                      </Paragraph>
+                      <Paragraph style={{color: Colors.SECONDARY_TEXT}}>
                         {movieDetail.release_date}
                       </Paragraph>
+                    </View>
+                  </View>
+                </>
+              ) : (
+                <View
+                  style={[
+                    theme.container,
+                    {justifyContent: 'center', alignItems: 'center'},
+                  ]}>
+                  <ActivityIndicator size="large" color={Colors.PRIMARY} />
+
+                  <Caption style={{fontSize: 18, marginTop: Spacing}}>
+                    Loading data...
+                  </Caption>
                 </View>
-              </View>
+              )}
             </View>
           </ScrollView>
         </>
-      ) }
+      )}
     </View>
   );
 };

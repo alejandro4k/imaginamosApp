@@ -21,7 +21,7 @@ const Home = () => {
   const onChangeSearch = (query: string) => setSearchQuery(query);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   useEffect(() => {
-    dispatch(setDarkMode())
+    dispatch(setDarkMode(isSwitchOn))
   }, [isSwitchOn])
   return (
     
